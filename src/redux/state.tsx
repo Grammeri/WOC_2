@@ -15,7 +15,7 @@ export type PostType = {
 }
 export type ProfilePageType = {
     posts:Array<PostType>
-
+    newPostText:string
 }
 export type DialogPageType = {
     dialogs: Array<DialogType>
@@ -35,6 +35,7 @@ let state = {
             {id: 3, message: 'Blabla', likesCount: 11},
             {id: 4, message: 'Dada', likesCount: 11},
         ],
+        newPostText:"it-kamasutra"
     },
     dialogsPage: {
         dialogs: [
@@ -56,15 +57,25 @@ let state = {
     sidebar: {}
 }
 
-export let addPost = (postMessage:string) => {
+// @ts-ignore
+window.state = state
+
+export let addPost = (/*postMessage*/) => { //удалили параметр postMessage
 
     let newPost:PostType = {
         id: 5,
-        message: postMessage, // В качестве message берем, то что приходит в параметрах в нашу функцию
+        message: /*postMessage*/ state.profilePage.newPostText, // В качестве message берем, то что приходит в параметрах в нашу функцию
         likesCount: 0
     };
     state.profilePage.posts.push(newPost);
+    state.profilePage.newPostText = "" //зануляем добавив из 67 строки приравняв к " "
     rerenderEntireTree(state);
 }
+
+export let updateNewPostText = (newText:string) => {
+    state.profilePage.newPostText = newText;
+    rerenderEntireTree(state);
+}
+
 
 export default state;

@@ -9,9 +9,9 @@ import Navbar from "./components/Navbar/Navbar";
 
 export type PropsType = {
     state:RootStateType
-    addPost:(message:string)=>void
-
-}
+    addPost:(/*message:string*/)=>void
+    updateNewPostText:(newText:string)=>void
+    }
 
 const App = (props:PropsType) => {
 
@@ -24,8 +24,10 @@ const App = (props:PropsType) => {
                     <Route path='/dialogs'
                            render={ () => <Dialogs state={props.state.dialogsPage} /> }/>
                     <Route path='/profile'
-                           render={ () => <Profile state={props.state.profilePage}
-                           addPost ={props.addPost}
+                           render={ () => <Profile  profilePage={props.state.profilePage} // Поменяли state={props.state.profilePage} на profilePage={props.state.profilePage}
+                                                    addPost ={props.addPost}
+                                                    updateNewPostText={props.updateNewPostText}
+
                            /> }/>
                 </div>
             </div>
