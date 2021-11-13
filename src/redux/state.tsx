@@ -1,4 +1,6 @@
-import {rerenderEntireTree} from "../render";
+let rerenderEntireTree = (state:RootStateType) => {
+    console.log("state is changed")
+}
 
 export type MessageType = {
     id:number
@@ -60,7 +62,7 @@ let state = {
 // @ts-ignore
 window.state = state
 
-export let addPost = (/*postMessage*/) => { //удалили параметр postMessage
+export const addPost = (/*postMessage*/) => { //удалили параметр postMessage
 
     let newPost:PostType = {
         id: 5,
@@ -72,9 +74,14 @@ export let addPost = (/*postMessage*/) => { //удалили параметр po
     rerenderEntireTree(state);
 }
 
-export let updateNewPostText = (newText:string) => {
+export const updateNewPostText = (newText:string) => {
     state.profilePage.newPostText = newText;
     rerenderEntireTree(state);
+}
+
+export const subscribe = (observer:any) => {
+    rerenderEntireTree = observer //Ни в коем случае не писать let перед rerenderEntireTree
+    //observer - это pattern
 }
 
 
