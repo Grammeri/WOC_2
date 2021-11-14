@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
-import {ActionsTypes, AddPostActionType, PostType} from "../../../redux/state";
+import {ActionsTypes, addPostActionCreator, PostType, updateNewPostTextActionCreator} from "../../../redux/state";
 import {text} from "stream/consumers";
 
 type PropsType = {
@@ -21,16 +21,17 @@ const MyPosts = (props:PropsType) => {
     let addPost = () =>{
      /*   props.addPost();*/ //Раньше вызывали конкретный метод в Store
         /*props.dispatch({type:"ADD-POST"})*/ //Теперь вызываем один и тот же метод 21, 27
-        let action:ActionsTypes = {type: "ADD-POST", newPostText:props.newPostText};
-        props.dispatch(action)
+        // @ts-ignore
+        /*let action:ActionsTypes = addPostActionCreator;*/
+        props.dispatch(addPostActionCreator(props.newPostText))
               }
 
 
         let onPostChange = ()=> {
-            let text = newPostElement.current ? newPostElement.current.value : ''
+            let newText = newPostElement.current ? newPostElement.current.value : ''
        /* props.updateNewPostText(text)*/
-            let action:ActionsTypes = {type: "UPDATE-NEW-POST-TEXT", newText:text};
-            props.dispatch(action)
+            /*let action:ActionsTypes = updateNewPostTextActionCreator(text);*/
+            props.dispatch(updateNewPostTextActionCreator(newText))
         }
 
     return (

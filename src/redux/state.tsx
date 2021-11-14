@@ -33,20 +33,21 @@ export type StoreType = {
     dispatch:(action:ActionsTypes)=>void
     }
 
-export type AddPostActionType = {
+/*export type AddPostActionType = {
     type:"ADD-POST"
     newPostText:string
-}
-
-export type UpdateNewPostTextType = {
+}*/
+/*type AddPostActionType = ReturnType<typeof addPostActionCreator>*/
+/*export type UpdateNewPostTextType = {
     type:"UPDATE-NEW-POST-TEXT"
     newText:string
-}
+}*/
+/*type UpdateNewPostTextType = ReturnType<typeof updateNewPostTextActionCreator>*/
 
-export type ActionsTypes = AddPostActionType
-    | UpdateNewPostTextType
-
-
+/*export type ActionsTypes = AddPostActionType
+    | UpdateNewPostTextType*/
+export type ActionsTypes = ReturnType<typeof addPostActionCreator>
+    | ReturnType<typeof updateNewPostTextActionCreator>
 
 
 const store: StoreType = {
@@ -105,6 +106,20 @@ const store: StoreType = {
             this._callSubscriber()
         }
     }
+}
+
+export const addPostActionCreator = (newPostText:string) => {
+    return {
+        type: "ADD-POST",
+        newPostText: newPostText
+    } as const
+}
+
+export const updateNewPostTextActionCreator = (newText: string) => {
+    return {
+        type: "UPDATE-NEW-POST-TEXT",
+        newText: newText
+    } as const
 }
 
 
