@@ -2,18 +2,20 @@ import React from 'react';
 import './App.css';
 import Profile from './components/Profile/Profile';
 import {BrowserRouter, Route} from "react-router-dom";
-import {DialogPageType, ProfilePageType, RootStateType} from "./redux/state";
+/*import {DialogPageType, ProfilePageType, RootStateType, StoreType} from "./redux/state";*/
 import Header from "./components/Header/Header";
 import Dialogs from "./components/Dialogs/Dialogs";
 import Navbar from "./components/Navbar/Navbar";
+import {ActionsTypes, AddPostActionType, RootStateType, UpdateNewPostTextType} from "./redux/state";
 
 export type PropsType = {
+/*    addPost:()=>void
+    updateNewPostText:(newText:string)=>void*/
     state:RootStateType
-    addPost:(/*message:string*/)=>void
-    updateNewPostText:(newText:string)=>void
-    }
+    dispatch:(action:ActionsTypes)=>void
+       }
 
-const App = (props:PropsType) => {
+const App:React.FC<PropsType> = (props) => {
 
     return (
 
@@ -24,9 +26,10 @@ const App = (props:PropsType) => {
                     <Route path='/dialogs'
                            render={ () => <Dialogs state={props.state.dialogsPage} /> }/>
                     <Route path='/profile'
-                           render={ () => <Profile  profilePage={props.state.profilePage} // Поменяли state={props.state.profilePage} на profilePage={props.state.profilePage}
-                                                    addPost ={props.addPost}
-                                                    updateNewPostText={props.updateNewPostText}
+                           render={ () => <Profile  profilePage={props.state.profilePage}
+                                                    dispatch = {props.dispatch}
+                                                    /*addPost ={props.addPost}
+                                                    updateNewPostText={props.updateNewPostText}*/
 
                            /> }/>
                 </div>

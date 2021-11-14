@@ -1,13 +1,15 @@
 import React from 'react';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
-import {PostType} from "../../../redux/state";
+import {ActionsTypes, AddPostActionType, PostType} from "../../../redux/state";
+import {text} from "stream/consumers";
 
 type PropsType = {
     posts:PostType[]
-    addPost:(/*message:string*/)=>void
+   /* addPost:()=>void*/
     newPostText:string
-    updateNewPostText:(newText:string)=>void
+ /*   updateNewPostText:(newText:string)=>void*/
+    dispatch:(action:ActionsTypes)=>void
     }
 
 const MyPosts = (props:PropsType) => {
@@ -17,21 +19,18 @@ const MyPosts = (props:PropsType) => {
     let newPostElement = React.createRef<HTMLTextAreaElement>();
 
     let addPost = () =>{
-/*        if (newPostElement.current){
-            props.addPost(newPostElement.current.value)
-        }*/
+     /*   props.addPost();*/ //Раньше вызывали конкретный метод в Store
+        /*props.dispatch({type:"ADD-POST"})*/ //Теперь вызываем один и тот же метод 21, 27
+        let action:ActionsTypes = {type: "ADD-POST", newPostText:props.newPostText};
+        props.dispatch(action)
+              }
 
-
-
-      /* let text = newPostElement.current ? newPostElement.current.value : ''*/
-        props.addPost(/*text*/);
-       /* props.updateNewPostText("")*/ //не будем зачищать при удалении поста, пойдем в state
-        /*newPostElement.current!.value = '';// Проговорить*/
-        }
 
         let onPostChange = ()=> {
             let text = newPostElement.current ? newPostElement.current.value : ''
-        props.updateNewPostText(text)
+       /* props.updateNewPostText(text)*/
+            let action:ActionsTypes = {type: "UPDATE-NEW-POST-TEXT", newText:text};
+            props.dispatch(action)
         }
 
     return (
