@@ -2,7 +2,8 @@ import React from 'react';
 import s from './Profile.module.css';
 import MyPosts from './MyPosts/MyPosts';
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import {ActionsTypes, PostType, ProfilePageType, RootStateType} from "../../redux/state";
+import {ActionsTypes, ProfilePageType} from "../../redux/redux-store";
+
 
 export type PropsType = {
     /*addPost: () => void*/

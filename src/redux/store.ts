@@ -1,3 +1,6 @@
+import profileReducer, {addPostActionCreator, updateNewPostTextActionCreator} from "./profile-reducer";
+import dialogsReducer, {sendMessageCreator, updateNewMessageBodyCreator} from "./dialogs-reducer";
+
 export type MessageType = {
     id:number
     message:string
@@ -18,6 +21,7 @@ export type ProfilePageType = {
 export type DialogPageType = {
     dialogs: Array<DialogType>
     messages: Array<MessageType>
+    newMessageBody:string
 }
 export type RootStateType = {
     profilePage:ProfilePageType
@@ -33,23 +37,14 @@ export type StoreType = {
     dispatch:(action:ActionsTypes)=>void
     }
 
-/*export type AddPostActionType = {
-    type:"ADD-POST"
-    newPostText:string
-}*/
-/*type AddPostActionType = ReturnType<typeof addPostActionCreator>*/
-/*export type UpdateNewPostTextType = {
-    type:"UPDATE-NEW-POST-TEXT"
-    newText:string
-}*/
-/*type UpdateNewPostTextType = ReturnType<typeof updateNewPostTextActionCreator>*/
-
-/*export type ActionsTypes = AddPostActionType
-    | UpdateNewPostTextType*/
 export type ActionsTypes = ReturnType<typeof addPostActionCreator>
     | ReturnType<typeof updateNewPostTextActionCreator>
+    | ReturnType<typeof updateNewMessageBodyCreator>
+    | ReturnType<typeof sendMessageCreator>
 
 
+
+// @ts-ignore
 const store: StoreType = {
     _state: {
         profilePage: {
@@ -76,7 +71,8 @@ const store: StoreType = {
                 {id: 3, message: 'Yo'},
                 {id: 4, message: 'Yo'},
                 {id: 5, message: 'Yo'}
-            ]
+            ],
+            newMessageBody: ""
         },
         /*sidebar: {}*/
     },
@@ -92,38 +88,13 @@ const store: StoreType = {
     },
 
     dispatch(action) {
-        if (action.type === "ADD-POST") {
-            let newPost: PostType = {
-                id: 5,
-                message: action.newPostText,
-                likesCount: 0
-            };
-            this._state.profilePage.posts.push(newPost);
-            this._state.profilePage.newPostText = "" //зануляем добавив из 67 строки приравняв к " "
-            this._callSubscriber();
-        } else if (action.type === "UPDATE-NEW-POST-TEXT") {
-            this._state.profilePage.newPostText = action.newText;
-            this._callSubscriber()
+        this._state.profilePage = profileReducer(this._state.profilePage, action)
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
+
+        this._callSubscriber();
         }
     }
-}
-
-export const addPostActionCreator = (newPostText:string) => {
-    return {
-        type: "ADD-POST",
-        newPostText: newPostText
-    } as const
-}
-
-export const updateNewPostTextActionCreator = (newText: string) => {
-    return {
-        type: "UPDATE-NEW-POST-TEXT",
-        newText: newText
-    } as const
-}
-
-
-// @ts-ignore
-window.store = store
+/*@ts-ignore
+window.store = store*/
 
 export default store;
