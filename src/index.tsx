@@ -8,7 +8,7 @@ import App from "./App";
 
 
 let rerenderEntireTree = (state:RootStateType) => {
-debugger
+
     ReactDOM.render(
         <BrowserRouter>
             <App state={state}

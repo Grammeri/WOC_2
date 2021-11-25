@@ -9,8 +9,17 @@ let rootReducers = combineReducers({
 
 let store = createStore(rootReducers);
 
-/*export type StoreType = typeof store*/
+export type StoreType = typeof store
 export type RootStateType = ReturnType<typeof rootReducers>
+
+
+export type ActionsTypes = ReturnType<typeof addPostActionCreator>
+    | ReturnType<typeof updateNewPostTextActionCreator>
+    | ReturnType<typeof updateNewMessageBodyCreator>
+    | ReturnType<typeof sendMessageCreator>
+
+
+export default store;
 
 export type MessageType = {
     id:number
@@ -39,19 +48,13 @@ export type DialogPageType = {
     profilePage:ProfilePageType
     dialogsPage:DialogPageType
 }*/
+/*
 export type StoreType = {
-/*    _state:RootStateType*/
-/*    updateNewPostText:(newText:string)=>void*/
-/*    addPost:()=>void*/
-/*    _callSubscriber:()=>void*/
+    _state:RootStateType
+    updateNewPostText:(newText:string)=>void
+    addPost:()=>void
+    _callSubscriber:()=>void
     subscribe:(observer:() => void) => void
     getState:()=>RootStateType
     dispatch:(action:ActionsTypes)=>void
-}
-export type ActionsTypes = ReturnType<typeof addPostActionCreator>
-    | ReturnType<typeof updateNewPostTextActionCreator>
-    | ReturnType<typeof updateNewMessageBodyCreator>
-    | ReturnType<typeof sendMessageCreator>
-
-
-export default store;
+}*/

@@ -2,19 +2,18 @@ import React, {ChangeEvent, ChangeEventHandler} from 'react';
 import s from './Dialogs.module.css';
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
+import {DialogPageType, StoreType} from '../../redux/redux-store';
 
-import {sendMessageCreator, updateNewMessageBodyCreator} from "../../redux/dialogs-reducer";
-import { StoreType } from '../../redux/redux-store';
-
-export type PropsType = {
-    /*state: DialogPageType*/
-    store:StoreType
-    }
+export type DialogsPropsType = {
+    dialogsPage:DialogPageType
+    sendMessage:()=>void
+    updateNewMessageBody:(body:string)=>void
+}
 
 
-const Dialogs = (props:PropsType) => {
+const Dialogs = (props:DialogsPropsType) => {
 
-    let state = props.store.getState().dialogsPage
+    let state = props.dialogsPage
 
     let dialogsElements =  state.dialogs.map( d => <DialogItem name={d.name} id={d.id} />  );
     let messagesElements = state.messages.map( m => <Message message={m.message}/> );
@@ -22,12 +21,13 @@ const Dialogs = (props:PropsType) => {
 
 
     const onSendMessageClick = () =>{
-       props.store.dispatch(sendMessageCreator())
+       props.sendMessage()
     }
 
     const onNewMessageChange = (e:ChangeEvent<HTMLTextAreaElement>) =>{ //неправильно подсказывает "ChangeEventHandler", пишем "ChangeEvent"
         let body = e.target.value;
-        props.store.dispatch(updateNewMessageBodyCreator(body))
+        props.updateNewMessageBody(body)
+
     }
 
     return (

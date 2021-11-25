@@ -6,14 +6,20 @@ import Header from "./components/Header/Header";
 import Dialogs from "./components/Dialogs/Dialogs";
 import Navbar from "./components/Navbar/Navbar";
 import {ActionsTypes, RootStateType, StoreType} from "./redux/redux-store";
+import DialogsContainer from "./components/Dialogs/DialogsContainer";
 
-export type PropsType = {
-   state:RootStateType
+
+
+export type AppPropsType = {
+   state: RootStateType
     dispatch:(action:ActionsTypes)=>void
     store:StoreType
+ /*   profilePage: ProfilePageType*/
+    /*addPost:()=>void
+    updateNewPostText:(newText:string)=>void*/
        }
 
-const App:React.FC<PropsType> = (props) => {
+const App:React.FC<AppPropsType> = (props) => {
 
     return (
 
@@ -22,13 +28,12 @@ const App:React.FC<PropsType> = (props) => {
                 <Navbar/>
                 <div className='app-wrapper-content'>
                     <Route path='/dialogs'
-                           render={ () => <Dialogs store={props.store}/> }/>
+                           render={ () => <DialogsContainer store={props.store}/> }/>
                     <Route path='/profile'
-                           render={ () => <Profile  profilePage={props.state.profilePage}
-                                                    dispatch = {props.dispatch}
-                                                    /*addPost ={props.addPost}
+                           render={ () => <Profile
+                               store={props.store}
+                                                   /* addPost ={props.addPost}
                                                     updateNewPostText={props.updateNewPostText}*/
-
                            /> }/>
                 </div>
             </div>
